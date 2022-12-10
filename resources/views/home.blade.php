@@ -1,47 +1,17 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <title>Document</title>
 </head>
 <body>
-    <div id="app">
+    <header>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    @guest
-                   
-                    @else
-                    <a class="navbar-brand" href="{{route('admin.home')}}">
-                        Home
-                     </a>
-                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <ul class="navbar-nav mr-auto">
-                        <li>
-                            <a href="{{route('admin.tasks.index')}}">Tutti i dipendenti</a>
-                        </li>
-                    </ul>
-                    @endguest
-                    
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -78,10 +48,26 @@
                 </div>
             </div>
         </nav>
+    </header>
 
-        <main class="py-5">
-            @yield('content')
-        </main>
-    </div>
+    <main>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            Benvenuto in ......... 
+                        </div>
+                        <div>
+                            Clicca su Register per registrare un nuovo utente
+                        </div>
+                        <div>
+                            Sei gia registrato? Esegui il Login!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

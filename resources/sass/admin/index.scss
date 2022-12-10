@@ -1,0 +1,12 @@
+@import '../variables';
+.index{
+    padding:$section_padding;
+    background-color: $main_color;
+
+    .ms_card{
+        padding: 8px;
+        background-color: $secondary_color;
+        border-radius: 10px;
+    }
+}
+

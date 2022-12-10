@@ -1,0 +1,10 @@
+@import '../common';
+@import '../variables';
+
+.show{
+    background-color: $main_color;
+
+    .ms_card{
+        background-color: $secondary_color;
+    }
+}

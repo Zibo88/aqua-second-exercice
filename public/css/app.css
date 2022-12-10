@@ -10932,3 +10932,34 @@ a.text-dark:focus {
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.index {
+  padding: 50px 0;
+  background-color: lightseagreen;
+}
+
+.index .ms_card {
+  padding: 8px;
+  background-color: bisque;
+  border-radius: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.show {
+  background-color: lightseagreen;
+}
+
+.show .ms_card {
+  background-color: bisque;
+}
+

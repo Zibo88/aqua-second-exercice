@@ -20,7 +20,7 @@ class TaskController extends Controller
     {
         $user = Auth::user();
         $employee_task = Task::where('user_id', '=', $user->id)->get();
-
+       
         // richiamo tutti gli utenti che hanno il ruol odi dipedente
         $employees = User::where('role', '=', 'dipendente')->get();
 
@@ -99,6 +99,8 @@ class TaskController extends Controller
 
         $all_tasks = Task::all();
 
+        $all_tasks = Task::orderBy('created_at', 'desc')->get();
+
         foreach($all_tasks as $task){
             $task_delivery_time = $task->delivery_time;
         }
@@ -168,15 +170,14 @@ class TaskController extends Controller
             $task_updated->delivery_time =  $form_data_edit['delivery_time'];
             $task_updated->user_id = $form_data_edit['user_id'];
             $task_updated->description =  $form_data_edit['description'];
+            $task_updated->update();
+            return redirect()->route('admin.tasks.show', ['task' =>  $task_updated->user_id]);
         }else{
             $request->validate($this->getValidationEmployee());
             $task_updated->description =  $form_data_edit['description'];
+            $task_updated->update();
+            return redirect()->route('admin.tasks.index');
         }
-
-        $task_updated->update();
-
-        return redirect()->route('admin.tasks.show', ['task' =>  $task_updated->user_id]);
-   
     }
 
     /**

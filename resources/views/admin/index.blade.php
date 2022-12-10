@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section>
+    <section class="index ">
         <div class="container">
             @if ($user->role === 'admin')
                 <h1>Tutti i dipendenti</h1>
@@ -18,10 +18,10 @@
                 <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                     @foreach ( $employees as  $employee)
                     <div class="col-6">
-                        <div class="card">
-                            <div>{{$employee->name}} {{$employee->lastname}}</div>
+                        <div class="ms_card">
+                            <h5>  {{ucfirst($employee->name)}} {{ucfirst($employee->lastname)}}</h5>
                             <div>Email: <br> {{$employee->email}}</div>
-                            <a href="{{route('admin.tasks.show', ['task' => $employee->id])}}">Scheda</a>
+                            <a href="{{route('admin.tasks.show', ['task' => $employee->id])}}">Task dipendente</a>
                         </div>
                     </div>
                     @endforeach 
@@ -32,13 +32,13 @@
             @if ($user->role === 'dipendente' && count($employee_task) >= 1)
             <div class="row">
                 @foreach ($employee_task as $task)
-                    <div class="col-12">
-                        <div class="card mt-5">
-                            <h5> Titolo: <br>{{$task->title}}</h5>
-                            <p>Descrizione: <br> {{$task->description}}</p>
+                    <div class="col-6">
+                        <div class="ms_card mt-5 p-4">
+                            <h5> Task: <br>{{$task->title}}</h5>
+                            <p>Nota: <br> {{$task->description}}</p>
                             <div>Preso in consegna il: <br> {{$task->user->created_at->format('d-m-Y - H:m')}}</div>
-                            <div>
-                                <a class="btn btn-primary" href="{{route('admin.tasks.edit' , ['task' => $task->id])}}">Scrvi una nota nella descrizione</a>
+                            <div class="d-flex mt-3 justify-content-end">
+                                <a class="btn btn-primary justify-content-end " href="{{route('admin.tasks.edit' , ['task' => $task->id])}}">Aggiungi Nota</a>
                             </div>
                         </div>
                     </div>
