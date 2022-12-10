@@ -16,7 +16,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $employee_task = Task::where('user_id', '=', $user->id)->get();
@@ -25,6 +25,7 @@ class TaskController extends Controller
         $employees = User::where('role', '=', 'dipendente')->get();
 
         // messaggio
+        $request_info = $request->all();
         $show_deleted_message = isset( $request_info['deleted']) ? $request_info['deleted'] : null;
 
         $data = [
@@ -63,7 +64,6 @@ class TaskController extends Controller
     public function store(Request $request)
     {
 
-     
         $request->validate($this->getValidation());
 
         $form_data_create = $request->all();
@@ -74,8 +74,6 @@ class TaskController extends Controller
         $new_task->delivery_time = $form_data_create['delivery_time'];
         $new_task->user_id = $form_data_create['user_id'];
         $new_task->save();
-
-   
 
         return redirect()->route('admin.tasks.show', ['task' => $new_task->user_id]);
 
@@ -93,29 +91,28 @@ class TaskController extends Controller
         // clicco sulla pagina e ragiungo l'utente con l'id corretto
         $user_page = User::findOrFail($id);
         $user_page_id = $user_page->id;
+        $user_page_name = $user_page->name;
+        $user_page_lastname = $user_page->lastname;
 
-        // ultima task creata
-        // $task_show = Task::findOrfail($id);
-        // dd($task_show);
+        $user_role = Auth::user();
+        $user_role_admin = $user_role->role;
 
         $all_tasks = Task::all();
 
-     
-   
-
         foreach($all_tasks as $task){
             $task_delivery_time = $task->delivery_time;
-            
         }
 
         $delivery_time = $this->getDate($task_delivery_time);
   
-
-
         $data = [
             'user_page_id' => $user_page_id,
             'all_tasks' => $all_tasks,
             'delivery_time' => $delivery_time,
+            'user_role_admin' => $user_role_admin,
+            'user_page_name' =>  $user_page_name,
+            'user_page_lastname' =>  $user_page_lastname
+
         ];
 
         return view('admin.show', $data);
@@ -131,13 +128,16 @@ class TaskController extends Controller
     {
 
         $task_to_edit = Task::findOrfail($id);
-   
 
         $users = User::where('role', '=', 'dipendente')->get();
-  
+        
+        $logged = Auth::user();
+
+        
         $data = [
             'task_to_edit' => $task_to_edit,
-            'users' => $users
+            'users' => $users,
+            'logged' =>  $logged        
         ];
 
         return view('admin.edit', $data);
@@ -153,19 +153,25 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate($this->getValidation());
+        // $request->validate($this->getValidation());
 
         $form_data_edit = $request->all();
-    
+        // dd($form_data_edit);
+
+        $user_logged = Auth::user();
 
         $task_updated = Task::findOrFail($id);
-        // dd($task_updated->user->id) 3;
-        // dd($form_data_edit['user_id']) 2;
-
-        $task_updated->title =  $form_data_edit['title'];
-        $task_updated->description =  $form_data_edit['description'];
-        $task_updated->delivery_time =  $form_data_edit['delivery_time'];
-        $task_updated->user_id = $form_data_edit['user_id'];
+       
+        if($user_logged->role === 'admin'){
+            $request->validate($this->getValidation());
+            $task_updated->title =  $form_data_edit['title'];
+            $task_updated->delivery_time =  $form_data_edit['delivery_time'];
+            $task_updated->user_id = $form_data_edit['user_id'];
+            $task_updated->description =  $form_data_edit['description'];
+        }else{
+            $request->validate($this->getValidationEmployee());
+            $task_updated->description =  $form_data_edit['description'];
+        }
 
         $task_updated->update();
 
@@ -181,10 +187,12 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        // $task_to_delete = Task::findOrfail($id);
-       
-        // $task_to_delete->delete();
-        // return redirect()->route('admin.tasks.index');
+        $task_to_delete = Task::findOrfail($id);
+        $task_to_delete->delete();
+
+    
+
+        return redirect()->route('admin.tasks.index', ['deleted' => 'yes']);
     }
 
     // funzione per la modifica delle date
@@ -198,6 +206,12 @@ class TaskController extends Controller
             'description' => 'required | max:60000',
             'delivery_time' => 'required',
             'user_id' => 'required',
+        ];
+    }
+
+    public function getValidationEmployee(){
+        return [
+            'description' => 'required | max:60000',
         ];
     }
 

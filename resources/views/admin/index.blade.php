@@ -2,16 +2,17 @@
 
 @section('content')
     <section>
-        {{-- @if($show_deleted_message === 'yes')
-	        <div class="alert alert-success" role="alert">
-	            Post eliminato con successo
-	        </div>
-        @endif --}}
         <div class="container">
             @if ($user->role === 'admin')
                 <h1>Tutti i dipendenti</h1>
             @else
                 <h1>Le tue Task</h1>
+            @endif
+            
+            @if($show_deleted_message === 'yes')
+            <div class="alert alert-success" role="alert">
+                Post eliminato con successo
+                </div>
             @endif
             @if ($user->role === 'admin')
                 <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
@@ -36,6 +37,9 @@
                             <h5> Titolo: <br>{{$task->title}}</h5>
                             <p>Descrizione: <br> {{$task->description}}</p>
                             <div>Preso in consegna il: <br> {{$task->user->created_at->format('d-m-Y - H:m')}}</div>
+                            <div>
+                                <a class="btn btn-primary" href="{{route('admin.tasks.edit' , ['task' => $task->id])}}">Scrvi una nota nella descrizione</a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -43,8 +47,6 @@
             @elseif($user->role === 'dipendente' && count($employee_task) < 1)
                <h3>Nessuna Task assegnata</h3>
             @endif
-
-            
         </div>
   
     </section>
