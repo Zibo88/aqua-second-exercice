@@ -8,6 +8,9 @@ use App\Task;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewTaskCreatedMail;
+
 
 class TaskController extends Controller
 {
@@ -75,6 +78,8 @@ class TaskController extends Controller
         $new_task->user_id = $form_data_create['user_id'];
         $new_task->save();
 
+        Mail::to('account@mail.it')->send(new  NewTaskCreatedMail());
+       
         return redirect()->route('admin.tasks.show', ['task' => $new_task->user_id]);
 
     }

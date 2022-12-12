@@ -6,12 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    @guest
+                   
+                    @else
+                    <a class="navbar-brand" href="{{route('admin.home')}}">
+                        Home
+                     </a>
+                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav mr-auto">
+                        <li>
+                            <a href="{{route('admin.tasks.index')}}">Tutti i dipendenti</a>
+                        </li>
+                    </ul>
+                    @endguest
+                    
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -46,6 +65,8 @@
                         @endguest
                     </ul>
                 </div>
+                   
+                
             </div>
         </nav>
     </header>
