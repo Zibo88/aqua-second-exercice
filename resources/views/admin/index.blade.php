@@ -37,6 +37,7 @@
                             <h5> Task: <br>{{$task->title}}</h5>
                             <p>Nota: <br> {{$task->description}}</p>
                             <div>Preso in consegna il: <br> {{$task->user->created_at->format('d-m-Y - H:m')}}</div>
+                          
                             <div class="d-flex mt-3 justify-content-end">
                                 <a class="btn btn-primary justify-content-end " href="{{route('admin.tasks.edit' , ['task' => $task->id])}}">Aggiungi Nota</a>
                             </div>

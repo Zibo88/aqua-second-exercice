@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewTaskCreatedMail;
+use App\MAil\EmployeeNoteMail;
 
 
 class TaskController extends Controller
@@ -78,8 +79,7 @@ class TaskController extends Controller
         $new_task->user_id = $form_data_create['user_id'];
         $new_task->save();
 
-        Mail::to('account@mail.it')->send(new  NewTaskCreatedMail()); 
-        
+        Mail::to('account@mail.it')->send(new  NewTaskCreatedMail($new_task)); 
        
         return redirect()->route('admin.tasks.show', ['task' => $new_task->user_id]);
 
@@ -167,7 +167,9 @@ class TaskController extends Controller
         // dd($form_data_edit);
 
         $user_logged = Auth::user();
-
+       
+        $admin = User::where('role','=', 'admin')->first();
+     
         $task_updated = Task::findOrFail($id);
        
         if($user_logged->role === 'admin'){
@@ -177,13 +179,22 @@ class TaskController extends Controller
             $task_updated->user_id = $form_data_edit['user_id'];
             $task_updated->description =  $form_data_edit['description'];
             $task_updated->update();
+
+            Mail::to($task_updated->user->email)->send(new EmployeeNoteMail($task_updated, $user_logged));
+
             return redirect()->route('admin.tasks.show', ['task' =>  $task_updated->user_id]);
         }else{
             $request->validate($this->getValidationEmployee());
             $task_updated->description =  $form_data_edit['description'];
+
+            Mail::to($task_updated->user->email)->send(new EmployeeNoteMail($task_updated, $user_logged));
+            Mail::to($admin->email)->send(new EmployeeNoteMail($task_updated, $user_logged));
+
             $task_updated->update();
             return redirect()->route('admin.tasks.index');
         }
+
+
     }
 
     /**

@@ -7,20 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NewTaskCreatedMail extends Mailable
+class EmployeeNoteMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $new_task;
-
+    private $task_updated;
+    private $user_logged;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($_new_task)
+    public function __construct($_task_updated,$_user_logged)
     {
-        $this->new_task = $_new_task;
+        $this->task_updated = $_task_updated;
+        $this->user_logged = $_user_logged;
     }
 
     /**
@@ -31,9 +32,10 @@ class NewTaskCreatedMail extends Mailable
     public function build()
     {
         $data = [
-            'new_task' => $this->new_task
+            'task_updated' => $this->task_updated,
+            'user_logged' => $this->user_logged
         ];
-        
-        return $this->view('email.new_task_created_mail',$data);
+
+        return $this->view('email.employee_note_mail', $data);
     }
 }

@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>mail</h1>
+   <h2>Ciao {{$new_task->user->name}} {{$new_task->user->lastname}}, ti è stata assegnata una nuova task: {{$new_task->title}}</h2>
+   <p>Nel caso avessi problemi scrivi pure nelle note</p>
 </body>
 </html>
