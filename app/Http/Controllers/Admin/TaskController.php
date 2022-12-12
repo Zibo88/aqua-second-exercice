@@ -50,12 +50,18 @@ class TaskController extends Controller
      */
     public function create()
     {
+       
         $employees = User::where('role', '=', 'dipendente')->get();
 
+        $tasks = Task::all();
+        $tasks->toArray();
 
         $data = [
             'employees' => $employees,
+            'tasks' => $tasks
         ];
+
+
         return view('admin.create', $data);
     }
 
@@ -77,6 +83,7 @@ class TaskController extends Controller
         $new_task->description = $form_data_create['description'];
         $new_task->delivery_time = $form_data_create['delivery_time'];
         $new_task->user_id = $form_data_create['user_id'];
+        $new_task->status = $form_data_create['status'];
         $new_task->save();
 
         Mail::to('account@mail.it')->send(new  NewTaskCreatedMail($new_task)); 
@@ -141,11 +148,11 @@ class TaskController extends Controller
         
         $logged = Auth::user();
 
-        
         $data = [
             'task_to_edit' => $task_to_edit,
             'users' => $users,
-            'logged' =>  $logged        
+            'logged' =>  $logged,
+      
         ];
 
         return view('admin.edit', $data);
@@ -165,7 +172,7 @@ class TaskController extends Controller
 
         $form_data_edit = $request->all();
         // dd($form_data_edit);
-
+      
         $user_logged = Auth::user();
        
         $admin = User::where('role','=', 'admin')->first();
@@ -178,6 +185,8 @@ class TaskController extends Controller
             $task_updated->delivery_time =  $form_data_edit['delivery_time'];
             $task_updated->user_id = $form_data_edit['user_id'];
             $task_updated->description =  $form_data_edit['description'];
+            $task_updated->status = $form_data_edit['status'];
+           
             $task_updated->update();
 
             Mail::to($task_updated->user->email)->send(new EmployeeNoteMail($task_updated, $user_logged));
@@ -186,7 +195,7 @@ class TaskController extends Controller
         }else{
             $request->validate($this->getValidationEmployee());
             $task_updated->description =  $form_data_edit['description'];
-
+            $task_updated->status = $form_data_edit['status'];
             Mail::to($task_updated->user->email)->send(new EmployeeNoteMail($task_updated, $user_logged));
             Mail::to($admin->email)->send(new EmployeeNoteMail($task_updated, $user_logged));
 

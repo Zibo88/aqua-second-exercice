@@ -8,6 +8,7 @@
 </head>
 <body>
    <h2>Ciao {{$new_task->user->name}} {{$new_task->user->lastname}}, ti è stata assegnata una nuova task: {{$new_task->title}}</h2>
+   <a href="{{route('admin.tasks.show', ['task' => $new_task->user_id])}}">Vedi dettagli</a>
    <p>Nel caso avessi problemi scrivi pure nelle note</p>
 </body>
 </html>

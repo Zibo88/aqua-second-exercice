@@ -17,7 +17,12 @@
                         <div>Dead line: {{$delivery_time->format('d-m-Y - H:m')}}</div>
                         <div>Consegnato il {{$task->created_at->format('d-m-Y - H:m')}}</div>
                         <div>Assegnato a: {{$task->user->name}} {{$task->user->lastname}}</div>
-                        <div class="d-flex mt-3 justify-content-end" >
+                        <div class="d-flex mt-3 justify-content-end align-items-center" >
+
+                            <div class="mr-3 justify-content-end">
+                                <div class="{{$task->status == 0 ? 'red' : 'green'}} , mr-4"></div>
+                            </div>
+
                             <div class="mr-3">
                                 <a class="btn btn-primary" href="{{route('admin.tasks.edit' , ['task' => $task->id])}}">Modifica Task</a>
                             </div>

@@ -29,12 +29,21 @@
                         </div>
 
                         <div class="col-md-6 my-4">
-                            <label for="delivery_time" class="form-label">Data di consegna</label>
+                            <label for="delivery_time" class="form-label">Data di consegna </label>  <br>
                             <input type="date" class="form-control" id="delivery_time" name="delivery_time" value="{{old('delivery_time')}}" >
                         </div>
 
                         <div class="col-md-12 my-4">
-                            <label for="user_id">Dipendente</label>
+                            <label for="status" class="form-label">Status</label> <br>
+                            <select name="status" id="status">
+                                <option value="0">Non completata</option>
+                                <option value="1">Completata</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-12 my-4">
+                            <label for="user_id">Dipendente</label> <br>
                             <select name="user_id" id="user_id" value="">
                                 <option value="">Nessuno</option>
                                 @foreach ($employees as $employee)
@@ -44,7 +53,7 @@
                         </div>
 
                         <div class="col-12">
-                          <button class="btn btn-primary" type="submit">Submit form</button>
+                          <button class="btn btn-primary" type="submit">Invia</button>
                         </div>
                     </form>
                 </div>

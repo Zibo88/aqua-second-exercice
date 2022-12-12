@@ -13,6 +13,14 @@
         Testo: <br>
         {{$task_updated->description}}
     </p>
+
+    <div>
+        @if($task_updated->status == 0)
+            Lo stato attuale della task è: non completata
+        @else
+            Lo stato attuale della task è: completata
+        @endif
+    </div>
     <a href="{{route('admin.tasks.show' , ['task' => $task_updated->user_id])}}">Vedi dettagli</a>
 </body>
 </html>

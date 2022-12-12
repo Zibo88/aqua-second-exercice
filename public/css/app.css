@@ -10938,6 +10938,20 @@ a.text-dark:focus {
   box-sizing: border-box;
 }
 
+.status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
 .index {
   padding: 50px 0;
   background-color: lightseagreen;
@@ -10953,6 +10967,20 @@ a.text-dark:focus {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
 }
 
 .show {
