@@ -78,7 +78,8 @@ class TaskController extends Controller
         $new_task->user_id = $form_data_create['user_id'];
         $new_task->save();
 
-        Mail::to('account@mail.it')->send(new  NewTaskCreatedMail());
+        Mail::to('account@mail.it')->send(new  NewTaskCreatedMail()); 
+        
        
         return redirect()->route('admin.tasks.show', ['task' => $new_task->user_id]);
 
