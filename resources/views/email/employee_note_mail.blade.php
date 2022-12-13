@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Modifica alla task: {{$task_updated->title}}</h2>
-    <p>{{ucfirst($user_logged->name)}} {{ucfirst($user_logged->lastname)}} ha modificato la task: <br>
+    <p>{{ucfirst($user_logged->name)}} {{ucfirst($user_logged->lastname)}} ha modificato la task. <br>
         <div></div>
         Testo: <br>
         {{$task_updated->description}}

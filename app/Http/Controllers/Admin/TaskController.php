@@ -117,15 +117,15 @@ class TaskController extends Controller
         foreach($all_tasks as $task){
             $task_delivery_time = $task->delivery_time;
         }
-
-        $delivery_time = $this->getDate($task_delivery_time);
   
+        $task->delivery_time = Carbon::parse($task->delivery_time)->format('d-m-Y');
+
         $data = [
             'user_page_id' => $user_page_id,
             'all_tasks' => $all_tasks,
-            'delivery_time' => $delivery_time,
             'user_role_admin' => $user_role_admin,
             'user_page_name' =>  $user_page_name,
+            'task->delivery_time' => $task->delivery_time,
             'user_page_lastname' =>  $user_page_lastname
 
         ];

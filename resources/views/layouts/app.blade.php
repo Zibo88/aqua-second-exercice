@@ -36,9 +36,14 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <ul class="navbar-nav mr-auto">
-                        <li>
+                        @if(Auth::user()->role === 'admin')
+                        <li class="mr-3">
                             <a href="{{route('admin.tasks.index')}}">Tutti i dipendenti</a>
                         </li>
+                        <li>
+                            <a href="{{route('admin.tasks.create')}}">Assegna Task</a>
+                        </li>
+                        @endif
                     </ul>
                     @endguest
                     
